@@ -1,42 +1,23 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+const ResumePreview = ({ data }) => {
+  return (
+    <div className="preview-card">
+      <h1>{data.name || "Your Name"}</h1>
+      <p className="contact">
+        {data.email || "email@example.com"} | {data.phone || "98XXXXXXXX"}
+      </p>
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+      <hr />
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+      <h3>Career Objective</h3>
+      <p>{data.objective || "Your career objective will appear here."}</p>
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+      <h3>Skills</h3>
+      <p>{data.skills || "Your skills will appear here."}</p>
 
-.card {
-  padding: 2em;
-}
+      <h3>Experience</h3>
+      <p>{data.experience || "Your experience will appear here."}</p>
+    </div>
+  );
+};
 
-.read-the-docs {
-  color: #888;
-}
+export default ResumePreview;

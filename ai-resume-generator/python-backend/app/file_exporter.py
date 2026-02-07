@@ -1,42 +1,15 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+from docx import Document
+from reportlab.pdfgen import canvas
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+def export_docx(content):
+    doc = Document()
+    doc.add_paragraph(content)
+    doc.save("output/resume.docx")
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+def export_pdf(content):
+    c = canvas.Canvas("output/resume.pdf")
+    text = c.beginText(40, 800)
+    for line in content.split("\n"):
+        text.textLine(line)
+    c.drawText(text)
+    c.save()

@@ -1,42 +1,36 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+import { useState } from "react";
+import { generateResume } from "../services/api";
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+const ResumeForm = () => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    skills: "",
+    experience: "",
+    objective: "",
+  });
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await generateResume(form);
+    alert("Resume generated successfully!");
+  };
 
-.card {
-  padding: 2em;
-}
+  return (
+    <form onSubmit={handleSubmit}>
+      <input name="name" placeholder="Name" onChange={handleChange} />
+      <input name="email" placeholder="Email" onChange={handleChange} />
+      <input name="phone" placeholder="Phone" onChange={handleChange} />
+      <textarea name="objective" placeholder="Objective" onChange={handleChange} />
+      <textarea name="skills" placeholder="Skills" onChange={handleChange} />
+      <textarea name="experience" placeholder="Experience" onChange={handleChange} />
+      <button type="submit">Generate Resume</button>
+    </form>
+  );
+};
 
-.read-the-docs {
-  color: #888;
-}
+export default ResumeForm;

@@ -1,97 +1,176 @@
+/* RESET */
 * {
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* PAGE CONTAINER */
 .container {
   min-height: 100vh;
   background: #f4f6fb;
   padding: 30px;
 }
 
+/* MAIN LAYOUT */
 .layout {
   display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 20px;
+  grid-template-columns: 420px 1fr; /* ✅ wider left panel */
+  gap: 24px;
+  align-items: flex-start;
 }
 
-
-/* FORM CARD */
+/* LEFT FORM CARD */
 .card {
-  background: white;
-  width: 45%;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
 }
 
+/* TITLE */
 .card h2 {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 20px;
+  color: #111827;
 }
 
+/* FORM STRUCTURE */
+.resume-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* FORM SECTIONS */
+.form-section {
+  border: 1px solid #e5e7eb;
+  padding: 18px;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+/* SECTION HEADER */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-section h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+/* LABELS */
 label {
   font-weight: 600;
+  font-size: 13px;
   margin-top: 12px;
   display: block;
+  color: #374151;
 }
 
+/* INPUTS & TEXTAREAS */
 input,
 textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px 14px;
   margin-top: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
 
-button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 12px;
-  background: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
+  background: #ffffff; /* ✅ force white */
+  color: #111827;      /* ✅ dark text */
 
-/* PREVIEW CARD */
-.preview-card {
-  background: white;
-  width: 55%;
-  padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
+  border: 1px solid #d1d5db;
 
-.preview-card h1 {
-  margin-bottom: 5px;
-}
-
-.contact {
-  color: #555;
   font-size: 14px;
 }
 
-.preview-card h3 {
-  margin-top: 20px;
-  color: #4f46e5;
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
 }
 
-.preview-card p {
-  line-height: 1.6;
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
+
+/* AI REWRITE BUTTON */
 .ai-btn {
-  margin-left: 10px;
-  font-size: 12px;
-  background: none;
-  border: none;
+  background: #eef2ff;
   color: #4f46e5;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
   cursor: pointer;
 }
 
 .ai-btn:hover {
-  text-decoration: underline;
+  background: #e0e7ff;
+}
+
+/* SKILL CHIPS */
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.skill-chip {
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.skill-chip button {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* GENERATE BUTTON */
+button[type="submit"] {
+  margin-top: 10px;
+  padding: 14px;
+  background: #4f46e5;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button[type="submit"]:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+}
+
+/* DOWNLOAD BUTTONS */
+.card a button {
+  background: #111827;
+}
+
+.card a button:hover {
+  background: #1f2937;
 }

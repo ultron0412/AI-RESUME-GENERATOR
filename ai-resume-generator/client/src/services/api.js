@@ -6,3 +6,6 @@ const API = axios.create({
 
 export const generateResume = (data) =>
   API.post("/resume/generate", data);
+
+export const rewriteWithAI = (text) =>
+  API.post("/resume/rewrite", { text });

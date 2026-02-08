@@ -1,0 +1,51 @@
+/* Right-side black panel */
+.preview-container {
+  background: #111;
+  height: 100vh;
+  padding: 40px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* White resume page */
+.resume-paper {
+  background: #ffffff;
+  width: 210mm;           /* A4 width */
+  min-height: 297mm;     /* A4 height */
+  padding: 40px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  font-family: "Arial", sans-serif;
+}
+
+/* Header */
+.name {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.contact {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+/* Sections */
+section {
+  margin-top: 20px;
+}
+
+section h3 {
+  font-size: 15px;
+  color: #1e40af;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+section p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #222;
+}

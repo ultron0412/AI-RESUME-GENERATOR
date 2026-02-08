@@ -25,17 +25,18 @@ def generate_resume(data: ResumeData):
 {data.email} | {data.phone}
 
 CAREER OBJECTIVE
-{enhance_text(data.objective)}
+{data.objective}
 
 SKILLS
-{enhance_text(data.skills)}
+{data.skills}
 
 EXPERIENCE
-{enhance_text(data.experience)}
+{data.experience}
 """
     export_pdf(resume_text)
     export_docx(resume_text)
     return {"message": "Resume generated successfully"}
+
 
 @app.post("/ai-rewrite")
 def ai_rewrite(req: RewriteRequest):

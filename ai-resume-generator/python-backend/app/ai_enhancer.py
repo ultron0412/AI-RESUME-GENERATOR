@@ -1,21 +1,23 @@
 import requests
 
-LM_STUDIO_URL = "http://192.168.52.1:1234"
+LM_STUDIO_URL = "http://192.168.52.1:1234/v1/chat/completions"
 
 def enhance_text(text: str) -> str:
     if not text or not text.strip():
         return text
 
+    prompt = (
+        "You are an expert resume writer. "
+        "Rewrite the following text professionally and concisely for a resume:\n\n"
+        f"{text}"
+    )
+
     payload = {
-        "model": "local-model",
+        "model": "mistralai/mistral-7b-instruct-v0.3",
         "messages": [
             {
-                "role": "system",
-                "content": "You are an expert resume writer. Improve text professionally and concisely."
-            },
-            {
                 "role": "user",
-                "content": text
+                "content": prompt
             }
         ],
         "temperature": 0.4,

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { generateResume } from "../services/api";
+import { generateResume, rewriteWithAI } from "../services/api";
 import ResumePreview from "./ResumePreview";
 import "./ResumeForm.css";
 
@@ -13,6 +13,8 @@ const ResumeForm = () => {
     objective: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -23,8 +25,31 @@ const ResumeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await generateResume(form);
-    alert("Resume generated successfully!");
+    try {
+      setLoading(true);
+      await generateResume(form);
+      alert("Resume generated successfully!");
+    } catch {
+      alert("Resume generation failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRewrite = async (field) => {
+    if (!form[field]) return;
+    try {
+      setLoading(true);
+      const res = await rewriteWithAI(form[field]);
+      setForm((prev) => ({
+        ...prev,
+        [field]: res.data.rewritten,
+      }));
+    } catch {
+      alert("AI rewrite failed. Is LM Studio running?");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,7 +85,16 @@ const ResumeForm = () => {
               placeholder="Enter your phone number"
             />
 
-            <label>Career Objective</label>
+            <label>
+              Career Objective
+              <button
+                type="button"
+                className="ai-btn"
+                onClick={() => handleRewrite("objective")}
+              >
+                ✨ Rewrite
+              </button>
+            </label>
             <textarea
               name="objective"
               rows="3"
@@ -69,7 +103,16 @@ const ResumeForm = () => {
               placeholder="Write your career objective"
             />
 
-            <label>Skills</label>
+            <label>
+              Skills
+              <button
+                type="button"
+                className="ai-btn"
+                onClick={() => handleRewrite("skills")}
+              >
+                ✨ Rewrite
+              </button>
+            </label>
             <textarea
               name="skills"
               rows="3"
@@ -78,7 +121,16 @@ const ResumeForm = () => {
               placeholder="e.g. React, Node, Python"
             />
 
-            <label>Experience</label>
+            <label>
+              Experience
+              <button
+                type="button"
+                className="ai-btn"
+                onClick={() => handleRewrite("experience")}
+              >
+                ✨ Rewrite
+              </button>
+            </label>
             <textarea
               name="experience"
               rows="4"
@@ -87,8 +139,29 @@ const ResumeForm = () => {
               placeholder="Describe your work experience"
             />
 
-            <button type="submit">Generate Resume</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Processing..." : "Generate Resume"}
+            </button>
           </form>
+
+          {/* DOWNLOAD BUTTONS */}
+          <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+            <a
+              href="http://localhost:5000/api/resume/download/pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <button type="button">Download PDF</button>
+            </a>
+
+            <a
+              href="http://localhost:5000/api/resume/download/docx"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <button type="button">Download DOCX</button>
+            </a>
+          </div>
         </div>
 
         {/* RIGHT SIDE – LIVE PREVIEW */}

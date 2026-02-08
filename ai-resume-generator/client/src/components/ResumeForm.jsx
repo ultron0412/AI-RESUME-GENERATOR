@@ -14,6 +14,7 @@ const ResumeForm = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [rewritingField, setRewritingField] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,34 +24,59 @@ const ResumeForm = () => {
     }));
   };
 
+  const isFormValid =
+    form.name && form.email && form.phone && form.skills && form.experience;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isFormValid) {
+      alert("Please fill all required fields before generating resume.");
+      return;
+    }
+
     try {
       setLoading(true);
       await generateResume(form);
       alert("Resume generated successfully!");
-    } catch {
-      alert("Resume generation failed");
+    } catch (err) {
+      console.error(err);
+      alert("Resume generation failed. Check backend logs.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleRewrite = async (field) => {
-    if (!form[field]) return;
+    if (!form[field]) {
+      alert("Please enter some text before rewriting.");
+      return;
+    }
+
     try {
-      setLoading(true);
+      setRewritingField(field);
       const res = await rewriteWithAI(form[field]);
       setForm((prev) => ({
         ...prev,
         [field]: res.data.rewritten,
       }));
-    } catch {
+    } catch (err) {
+      console.error(err);
       alert("AI rewrite failed. Is LM Studio running?");
     } finally {
-      setLoading(false);
+      setRewritingField(null);
     }
   };
+
+  const renderRewriteButton = (field) => (
+    <button
+      type="button"
+      className="ai-btn"
+      disabled={rewritingField === field}
+      onClick={() => handleRewrite(field)}
+    >
+      {rewritingField === field ? "Rewriting..." : "✨ Rewrite"}
+    </button>
+  );
 
   return (
     <div className="container">
@@ -60,7 +86,7 @@ const ResumeForm = () => {
           <h2>AI Resume Generator</h2>
 
           <form onSubmit={handleSubmit}>
-            <label>Full Name</label>
+            <label>Full Name *</label>
             <input
               name="name"
               value={form.name}
@@ -68,7 +94,7 @@ const ResumeForm = () => {
               placeholder="Enter your full name"
             />
 
-            <label>Email</label>
+            <label>Email *</label>
             <input
               name="email"
               type="email"
@@ -77,7 +103,7 @@ const ResumeForm = () => {
               placeholder="Enter your email"
             />
 
-            <label>Phone</label>
+            <label>Phone *</label>
             <input
               name="phone"
               value={form.phone}
@@ -86,14 +112,7 @@ const ResumeForm = () => {
             />
 
             <label>
-              Career Objective
-              <button
-                type="button"
-                className="ai-btn"
-                onClick={() => handleRewrite("objective")}
-              >
-                ✨ Rewrite
-              </button>
+              Career Objective {renderRewriteButton("objective")}
             </label>
             <textarea
               name="objective"
@@ -104,14 +123,7 @@ const ResumeForm = () => {
             />
 
             <label>
-              Skills
-              <button
-                type="button"
-                className="ai-btn"
-                onClick={() => handleRewrite("skills")}
-              >
-                ✨ Rewrite
-              </button>
+              Skills * {renderRewriteButton("skills")}
             </label>
             <textarea
               name="skills"
@@ -122,14 +134,7 @@ const ResumeForm = () => {
             />
 
             <label>
-              Experience
-              <button
-                type="button"
-                className="ai-btn"
-                onClick={() => handleRewrite("experience")}
-              >
-                ✨ Rewrite
-              </button>
+              Experience * {renderRewriteButton("experience")}
             </label>
             <textarea
               name="experience"
@@ -139,8 +144,8 @@ const ResumeForm = () => {
               placeholder="Describe your work experience"
             />
 
-            <button type="submit" disabled={loading}>
-              {loading ? "Processing..." : "Generate Resume"}
+            <button type="submit" disabled={loading || !isFormValid}>
+              {loading ? "Generating Resume..." : "Generate Resume"}
             </button>
           </form>
 
@@ -151,7 +156,9 @@ const ResumeForm = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <button type="button">Download PDF</button>
+              <button type="button" disabled={loading}>
+                Download PDF
+              </button>
             </a>
 
             <a
@@ -159,7 +166,9 @@ const ResumeForm = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <button type="button">Download DOCX</button>
+              <button type="button" disabled={loading}>
+                Download DOCX
+              </button>
             </a>
           </div>
         </div>

@@ -83,3 +83,15 @@ button {
 .preview-card p {
   line-height: 1.6;
 }
+.ai-btn {
+  margin-left: 10px;
+  font-size: 12px;
+  background: none;
+  border: none;
+  color: #4f46e5;
+  cursor: pointer;
+}
+
+.ai-btn:hover {
+  text-decoration: underline;
+}

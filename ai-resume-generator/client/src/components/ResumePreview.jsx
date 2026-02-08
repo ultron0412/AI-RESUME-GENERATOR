@@ -2,6 +2,7 @@ const ResumePreview = ({ data }) => {
   return (
     <div className="preview-card">
       <h1>{data.name || "Your Name"}</h1>
+
       <p className="contact">
         {data.email || "email@example.com"} | {data.phone || "98XXXXXXXX"}
       </p>

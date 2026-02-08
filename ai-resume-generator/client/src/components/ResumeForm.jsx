@@ -8,13 +8,14 @@ const ResumeForm = () => {
     name: "",
     email: "",
     phone: "",
-    skills: "",
+    skills: [], // ✅ skills as chips
     experience: "",
     objective: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [rewritingField, setRewritingField] = useState(null);
+  const [skillInput, setSkillInput] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,12 +26,43 @@ const ResumeForm = () => {
   };
 
   const isFormValid =
-    form.name && form.email && form.phone && form.skills && form.experience;
+    form.name &&
+    form.email &&
+    form.phone &&
+    form.skills.length > 0 &&
+    form.experience;
+
+  /* ------------------ SKILL CHIP HANDLERS ------------------ */
+
+  const addSkill = (e) => {
+    if (e.key === "Enter" && skillInput.trim()) {
+      e.preventDefault();
+
+      if (!form.skills.includes(skillInput.trim())) {
+        setForm((prev) => ({
+          ...prev,
+          skills: [...prev.skills, skillInput.trim()],
+        }));
+      }
+
+      setSkillInput("");
+    }
+  };
+
+  const removeSkill = (skillToRemove) => {
+    setForm((prev) => ({
+      ...prev,
+      skills: prev.skills.filter((s) => s !== skillToRemove),
+    }));
+  };
+
+  /* ------------------ SUBMIT ------------------ */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!isFormValid) {
-      alert("Please fill all required fields before generating resume.");
+      alert("Please fill all required fields.");
       return;
     }
 
@@ -46,18 +78,33 @@ const ResumeForm = () => {
     }
   };
 
+  /* ------------------ AI REWRITE ------------------ */
+
   const handleRewrite = async (field) => {
-    if (!form[field]) {
+    if (
+      !form[field] ||
+      (Array.isArray(form[field]) && form[field].length === 0)
+    ) {
       alert("Please enter some text before rewriting.");
       return;
     }
 
     try {
       setRewritingField(field);
-      const res = await rewriteWithAI(form[field]);
+
+      const inputText = Array.isArray(form[field])
+        ? form[field].join(", ")
+        : form[field];
+
+      const res = await rewriteWithAI(inputText);
+      const rewritten = res.data.rewritten;
+
       setForm((prev) => ({
         ...prev,
-        [field]: res.data.rewritten,
+        [field]:
+          field === "skills"
+            ? rewritten.split(",").map((s) => s.trim())
+            : rewritten,
       }));
     } catch (err) {
       console.error(err);
@@ -85,64 +132,95 @@ const ResumeForm = () => {
         <div className="card">
           <h2>AI Resume Generator</h2>
 
-          <form onSubmit={handleSubmit}>
-            <label>Full Name *</label>
-            <input
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Enter your full name"
-            />
+          <form onSubmit={handleSubmit} className="resume-form">
+            {/* PERSONAL INFO */}
+            <div className="form-section">
+              <h4>Personal Information</h4>
 
-            <label>Email *</label>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-            />
+              <label>Full Name *</label>
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="e.g. Aayush Jung Kunwar"
+              />
 
-            <label>Phone *</label>
-            <input
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              placeholder="Enter your phone number"
-            />
+              <label>Email *</label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="e.g. aayush@email.com"
+              />
 
-            <label>
-              Career Objective {renderRewriteButton("objective")}
-            </label>
-            <textarea
-              name="objective"
-              rows="3"
-              value={form.objective}
-              onChange={handleChange}
-              placeholder="Write your career objective"
-            />
+              <label>Phone *</label>
+              <input
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                placeholder="e.g. 98XXXXXXXX"
+              />
+            </div>
 
-            <label>
-              Skills * {renderRewriteButton("skills")}
-            </label>
-            <textarea
-              name="skills"
-              rows="3"
-              value={form.skills}
-              onChange={handleChange}
-              placeholder="e.g. React, Node, Python"
-            />
+            {/* OBJECTIVE */}
+            <div className="form-section">
+              <div className="section-header">
+                <h4>Career Objective</h4>
+                {renderRewriteButton("objective")}
+              </div>
 
-            <label>
-              Experience * {renderRewriteButton("experience")}
-            </label>
-            <textarea
-              name="experience"
-              rows="4"
-              value={form.experience}
-              onChange={handleChange}
-              placeholder="Describe your work experience"
-            />
+              <textarea
+                name="objective"
+                rows="4"
+                value={form.objective}
+                onChange={handleChange}
+                placeholder="Brief summary of your career goals..."
+              />
+            </div>
+
+            {/* SKILLS – CHIPS */}
+            <div className="form-section">
+              <div className="section-header">
+                <h4>Skills *</h4>
+                {renderRewriteButton("skills")}
+              </div>
+
+              <input
+                type="text"
+                value={skillInput}
+                onChange={(e) => setSkillInput(e.target.value)}
+                onKeyDown={addSkill}
+                placeholder="Type a skill and press Enter"
+              />
+
+              <div className="skills-container">
+                {form.skills.map((skill, index) => (
+                  <span key={index} className="skill-chip">
+                    {skill}
+                    <button type="button" onClick={() => removeSkill(skill)}>
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* EXPERIENCE */}
+            <div className="form-section">
+              <div className="section-header">
+                <h4>Experience *</h4>
+                {renderRewriteButton("experience")}
+              </div>
+
+              <textarea
+                name="experience"
+                rows="5"
+                value={form.experience}
+                onChange={handleChange}
+                placeholder="Describe your work experience..."
+              />
+            </div>
 
             <button type="submit" disabled={loading || !isFormValid}>
               {loading ? "Generating Resume..." : "Generate Resume"}

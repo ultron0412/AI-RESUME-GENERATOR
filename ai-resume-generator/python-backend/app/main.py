@@ -5,7 +5,8 @@ from .resume_generator import build_resume
 from .file_exporter import export_pdf, export_docx
 from .ai_enhancer import enhance_text
 
-app = FastAPI()
+app = FastAPI() //fast api instance
+
 
 class ResumeData(BaseModel):
     name: str

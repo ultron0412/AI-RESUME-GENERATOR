@@ -84,8 +84,8 @@ textarea {
   padding: 12px 14px;
   margin-top: 6px;
 
-  background: #ffffff; /* ✅ force white */
-  color: #111827;      /* ✅ dark text */
+  background: #ffffff; 
+  color: #111827;      
 
   border-radius: 10px;
   border: 1px solid #d1d5db;
@@ -95,7 +95,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: #9ca3af;
+  color: #065cf0;
 }
 
 input:focus,

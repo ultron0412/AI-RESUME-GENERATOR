@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from fastapi.responses import FileResponse
-from .resume_generator import build_resume
+from fastapi.responses import FileResponse // pydantic models for request validation
+from .resume_generator import build_resume 
 from .file_exporter import export_pdf, export_docx
 from .ai_enhancer import enhance_text
 

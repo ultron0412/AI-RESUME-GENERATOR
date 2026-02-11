@@ -3,3 +3,8 @@ uvicorn
 python-docx
 reportlab
 requests
+python-multipart
+pydantic
+pytest
+pytest-asyncio
+httpx

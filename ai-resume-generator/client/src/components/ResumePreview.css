@@ -76,3 +76,6 @@ section p {
 .creative .sidebar h3 {
   color: #fff;
 }
+.preview-card.creative .main h3 {
+  color: #4f46e5;
+}

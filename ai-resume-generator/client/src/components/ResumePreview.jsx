@@ -1,33 +1,36 @@
-import "./ResumePreview.css";
+import { useState } from "react";
+import ModernTemplate from "./templates/ModernTemplate";
+import ATSTemplate from "./templates/ATSTemplate";
+import CreativeTemplate from "./templates/CreativeTemplate";
 
 const ResumePreview = ({ data }) => {
+  const [template, setTemplate] = useState("modern");
+
+  const renderTemplate = () => {
+    switch (template) {
+      case "ats":
+        return <ATSTemplate data={data} />;
+      case "creative":
+        return <CreativeTemplate data={data} />;
+      default:
+        return <ModernTemplate data={data} />;
+    }
+  };
+
   return (
-    <div className="preview-container">
-      <div className="resume-paper">
-        <h1 className="name">{data.name || "Your Name"}</h1>
-
-        <p className="contact">
-          {data.email || "email@example.com"} |{" "}
-          {data.phone || "98XXXXXXXX"}
-        </p>
-
-        <hr />
-
-        <section>
-          <h3>Career Objective</h3>
-          <p>{data.objective || "Your career objective will appear here."}</p>
-        </section>
-
-        <section>
-          <h3>Skills</h3>
-          <p>{data.skills || "Your skills will appear here."}</p>
-        </section>
-
-        <section>
-          <h3>Experience</h3>
-          <p>{data.experience || "Your experience will appear here."}</p>
-        </section>
+    <div>
+      <div style={{ marginBottom: "15px" }}>
+        <select
+          value={template}
+          onChange={(e) => setTemplate(e.target.value)}
+        >
+          <option value="modern">Modern</option>
+          <option value="ats">ATS Friendly</option>
+          <option value="creative">Creative</option>
+        </select>
       </div>
+
+      {renderTemplate()}
     </div>
   );
 };

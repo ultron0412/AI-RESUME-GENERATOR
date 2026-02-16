@@ -9,7 +9,7 @@ OBJECTIVE
 {enhance_text(data.objective)}
 
 SKILLS
-{enhance_text(data.skills)}
+{enhance_text(data.skills)}     \** Skills are often best presented as bullet points, so we can enhance them as a list.
 
 EXPERIENCE
 {enhance_text(data.experience)}

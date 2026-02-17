@@ -2,8 +2,9 @@ import { useState } from "react";
 import ModernTemplate from "./templates/ModernTemplate";
 import ATSTemplate from "./templates/ATSTemplate";
 import CreativeTemplate from "./templates/CreativeTemplate";
+import "./ResumePreview.css";
 
-const ResumePreview = ({ data }) => {
+const ResumePreview = ({ data, completionScore }) => {
   const [template, setTemplate] = useState("modern");
 
   const renderTemplate = () => {
@@ -18,19 +19,24 @@ const ResumePreview = ({ data }) => {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: "15px" }}>
-        <select
-          value={template}
-          onChange={(e) => setTemplate(e.target.value)}
-        >
-          <option value="modern">Modern</option>
-          <option value="ats">ATS Friendly</option>
-          <option value="creative">Creative</option>
-        </select>
+    <div className="preview-shell">
+      <div className="preview-topbar">
+        <div>
+          <p className="preview-label">Live Preview</p>
+          <h3>Template Playground</h3>
+        </div>
+
+        <div className="preview-actions">
+          <div className="score-chip">Resume Score: {completionScore}%</div>
+          <select value={template} onChange={(e) => setTemplate(e.target.value)}>
+            <option value="modern">Modern</option>
+            <option value="ats">ATS Friendly</option>
+            <option value="creative">Creative</option>
+          </select>
+        </div>
       </div>
 
-      {renderTemplate()}
+      <div className="preview-canvas">{renderTemplate()}</div>
     </div>
   );
 };

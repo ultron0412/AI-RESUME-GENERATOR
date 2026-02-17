@@ -2,6 +2,7 @@ import { useState } from "react";
 import ModernTemplate from "./templates/ModernTemplate";
 import ATSTemplate from "./templates/ATSTemplate";
 import CreativeTemplate from "./templates/CreativeTemplate";
+import "./ResumePreview.css";
 
 const ResumePreview = ({ data }) => {
   const [template, setTemplate] = useState("modern");
@@ -18,20 +19,20 @@ const ResumePreview = ({ data }) => {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: "15px" }}>
-        <select
-          value={template}
-          onChange={(e) => setTemplate(e.target.value)}
-        >
+    <section className="preview-shell">
+      <div className="preview-toolbar">
+        <div>
+          <p className="preview-eyebrow">Live Preview</p>
+          <h3>Template Studio</h3>
+        </div>
+        <select value={template} onChange={(e) => setTemplate(e.target.value)}>
           <option value="modern">Modern</option>
           <option value="ats">ATS Friendly</option>
           <option value="creative">Creative</option>
         </select>
       </div>
-
-      {renderTemplate()}
-    </div>
+      <div className="preview-frame">{renderTemplate()}</div>
+    </section>
   );
 };
 

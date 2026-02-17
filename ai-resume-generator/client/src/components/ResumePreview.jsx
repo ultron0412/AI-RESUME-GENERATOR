@@ -2,6 +2,7 @@ import { useState } from "react";
 import ModernTemplate from "./templates/ModernTemplate";
 import ATSTemplate from "./templates/ATSTemplate";
 import CreativeTemplate from "./templates/CreativeTemplate";
+import "./ResumePreview.css";
 
 const ResumePreview = ({ data }) => {
   const [template, setTemplate] = useState("modern");
@@ -18,20 +19,35 @@ const ResumePreview = ({ data }) => {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: "15px" }}>
-        <select
-          value={template}
-          onChange={(e) => setTemplate(e.target.value)}
-        >
-          <option value="modern">Modern</option>
-          <option value="ats">ATS Friendly</option>
-          <option value="creative">Creative</option>
-        </select>
+    <section className="preview-pane">
+      <div className="preview-toolbar">
+        <h3>Live Resume Preview</h3>
+        <div className="template-pills">
+          <button
+            type="button"
+            className={template === "modern" ? "active" : ""}
+            onClick={() => setTemplate("modern")}
+          >
+            Modern
+          </button>
+          <button
+            type="button"
+            className={template === "ats" ? "active" : ""}
+            onClick={() => setTemplate("ats")}
+          >
+            ATS
+          </button>
+          <button
+            type="button"
+            className={template === "creative" ? "active" : ""}
+            onClick={() => setTemplate("creative")}
+          >
+            Creative
+          </button>
+        </div>
       </div>
-
-      {renderTemplate()}
-    </div>
+      <div className="preview-scroll">{renderTemplate()}</div>
+    </section>
   );
 };
 

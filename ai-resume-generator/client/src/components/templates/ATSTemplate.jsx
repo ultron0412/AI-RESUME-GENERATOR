@@ -1,20 +1,37 @@
 const ATSTemplate = ({ data }) => {
   return (
-    <div className="preview-card ats">
-      <h2>{data.name}</h2>
-      <p>{data.email} | {data.phone}</p>
+    <article className="preview-card ats">
+      <h1>{data.name || "Your Name"}</h1>
+      <p>{[data.title, data.location].filter(Boolean).join(" | ")}</p>
+      <p>{[data.email, data.phone, data.linkedin, data.github].filter(Boolean).join(" | ")}</p>
 
       <hr />
 
-      <strong>Objective</strong>
-      <p>{data.objective}</p>
+      <section>
+        <strong>PROFESSIONAL SUMMARY</strong>
+        <p>{data.objective || "Include your summary here."}</p>
+      </section>
 
-      <strong>Skills</strong>
-      <p>{data.skills?.join(", ")}</p>
+      <section>
+        <strong>SKILLS</strong>
+        <p>{data.skills?.join(", ") || "Add core skills separated by commas."}</p>
+      </section>
 
-      <strong>Experience</strong>
-      <p>{data.experience}</p>
-    </div>
+      <section>
+        <strong>EXPERIENCE</strong>
+        <p>{data.experience || "List experience with action verbs and outcomes."}</p>
+      </section>
+
+      <section>
+        <strong>EDUCATION</strong>
+        <p>{data.education || "Degree, institution, year."}</p>
+      </section>
+
+      <section>
+        <strong>PROJECTS</strong>
+        <p>{data.projects || "Mention practical projects relevant to the role."}</p>
+      </section>
+    </article>
   );
 };
 

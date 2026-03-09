@@ -1,5 +1,1 @@
-fastapi
-uvicorn
-python-docx
-reportlab
-requests
+# Python backend package

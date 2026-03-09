@@ -8,8 +8,7 @@ const Navbar = () => {
   return (
     <nav className="navbar glass">
       <Link to="/" className="navbar-logo">
-        <HiSparkles className="logo-icon" />
-        <span className="logo-text">Ultron<span className="logo-accent">AI</span></span>
+        <span className="logo-text">Ultron</span>
       </Link>
 
       <div className="navbar-links">
@@ -34,7 +33,6 @@ const Navbar = () => {
       </div>
 
       <Link to="/builder" className="navbar-cta btn-primary">
-        <HiSparkles />
         Build Resume
       </Link>
     </nav>

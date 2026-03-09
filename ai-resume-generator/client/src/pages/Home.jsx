@@ -54,7 +54,7 @@ const Home = () => {
         <div className="hero-glow" />
         <div className="hero-content fade-in">
           <span className="hero-badge glass">
-            <HiSparkles /> Powered by AI
+            Professional Resume Builder
           </span>
           <h1 className="hero-title">
             Build Your Perfect
@@ -62,12 +62,11 @@ const Home = () => {
             <span className="gradient-text">Resume in Minutes</span>
           </h1>
           <p className="hero-subtitle">
-            Create stunning, ATS-friendly resumes with AI-powered writing
+            Create stunning, ATS-friendly resumes with professional writing
             assistance. Stand out from the competition and land your dream job.
           </p>
           <div className="hero-actions">
             <Link to="/builder" className="btn-primary hero-btn">
-              <HiSparkles />
               Start Building — Free
             </Link>
             <Link to="/templates" className="btn-secondary hero-btn">
@@ -100,7 +99,7 @@ const Home = () => {
           <span className="gradient-text">Land the Job</span>
         </h2>
         <p className="section-subtitle">
-          From AI writing to professional templates, we've got you covered.
+          From professional writing to expert templates, we've got you covered.
         </p>
         <div className="features-grid">
           {features.map((f, i) => (
@@ -126,7 +125,6 @@ const Home = () => {
           </h2>
           <p>Join thousands who've already created their perfect resume.</p>
           <Link to="/builder" className="btn-primary hero-btn">
-            <HiSparkles />
             Get Started Now
           </Link>
         </div>
@@ -136,7 +134,7 @@ const Home = () => {
       <footer className="footer">
         <div className="footer-inner">
           <span className="footer-brand">
-            <HiSparkles /> Ultron
+            Ultron
           </span>
           <span className="footer-copy">
             © 2026 Ultron. All Rights Reserved.

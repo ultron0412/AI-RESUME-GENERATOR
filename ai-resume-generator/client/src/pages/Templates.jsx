@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HiSparkles, HiCheckCircle } from "react-icons/hi2";
+import { HiCheckCircle } from "react-icons/hi2";
 import Navbar from "../components/Navbar";
 import "./Templates.css";
 
@@ -82,7 +82,6 @@ const Templates = () => {
                 to={`/builder?template=${t.id}`}
                 className="btn-primary template-btn"
               >
-                <HiSparkles />
                 Use {t.name}
               </Link>
             </div>

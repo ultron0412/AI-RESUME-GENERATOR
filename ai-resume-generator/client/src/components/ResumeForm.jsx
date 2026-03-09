@@ -23,7 +23,7 @@ const STEPS = [
   "Links",
 ];
 
-const DRAFT_KEY = "resumeai_draft";
+const DRAFT_KEY = "ultron_draft";
 
 const ResumeForm = () => {
   const [searchParams] = useSearchParams();
@@ -136,9 +136,9 @@ const ResumeForm = () => {
             ? rewritten.split(",").map((s) => s.trim())
             : rewritten,
       }));
-      toast.success(`${field} rewritten by AI!`);
+      toast.success(`${field} professionally rewritten!`);
     } catch {
-      toast.error("AI rewrite failed. Is LM Studio running?");
+      toast.error("Rewrite failed. Is LM Studio running?");
     } finally {
       setRewritingField(null);
     }
@@ -157,7 +157,7 @@ const ResumeForm = () => {
         </>
       ) : (
         <>
-          <HiSparkles /> AI Rewrite
+          Rewrite
         </>
       )}
     </button>
@@ -462,7 +462,7 @@ const ResumeForm = () => {
                   </>
                 ) : (
                   <>
-                    <HiSparkles /> Generate Resume
+                    Generate Resume
                   </>
                 )}
               </button>

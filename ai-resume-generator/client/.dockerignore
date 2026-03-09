@@ -4,4 +4,3 @@ dist/
 .env.local
 Dockerfile
 .dockerignore
-nginx.conf

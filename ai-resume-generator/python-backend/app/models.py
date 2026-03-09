@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 class ResumeData(BaseModel):
     name: str
     email: str
@@ -13,3 +12,6 @@ class ResumeData(BaseModel):
     linkedin: str = ""
     github: str = ""
     portfolio: str = ""
+
+class RewriteRequest(BaseModel):
+    text: str

@@ -9,7 +9,7 @@ const Navbar = () => {
     <nav className="navbar glass">
       <Link to="/" className="navbar-logo">
         <HiSparkles className="logo-icon" />
-        <span className="logo-text">Resume<span className="logo-accent">AI</span></span>
+        <span className="logo-text">Ultron<span className="logo-accent">AI</span></span>
       </Link>
 
       <div className="navbar-links">

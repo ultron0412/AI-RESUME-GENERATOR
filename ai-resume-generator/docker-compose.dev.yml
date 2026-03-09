@@ -1,0 +1,44 @@
+services:
+  python-backend:
+    build:
+      context: ./python-backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./python-backend:/app
+      - resume-output:/app/output
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    environment:
+      - DEBUG=True
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: ["npx", "nodemon", "server.js"]
+    environment:
+      - NODE_ENV=development
+      - ALLOWED_ORIGINS=http://localhost:5173
+
+  client:
+    build: 
+      context: ./client
+      # We just override the entrypoint to run the vite dev server instead of building for nginx
+      # But since the client dockerfile uses a multi-stage build, for dev we might just run
+      # npm run dev locally, or use a simpler container. Let's just use the node image for dev:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    command: ["npm", "run", "dev", "--", "--host"]
+    depends_on:
+      - server

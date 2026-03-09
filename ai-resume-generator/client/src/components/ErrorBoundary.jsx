@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { HiExclamationTriangle } from "react-icons/hi2";
-import "./NotFound.css"; // Reuse the styles from NotFound for simplicity
+import "../pages/NotFound.css"; // Fixed path: NotFound.css is in src/pages/
 
 class ErrorBoundary extends Component {
   constructor(props) {

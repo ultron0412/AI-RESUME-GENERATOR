@@ -136,10 +136,10 @@ const Home = () => {
       <footer className="footer">
         <div className="footer-inner">
           <span className="footer-brand">
-            <HiSparkles /> ResumeAI
+            <HiSparkles /> Ultron
           </span>
           <span className="footer-copy">
-            © 2026 ResumeAI. Built with ❤️ and AI.
+            © 2026 Ultron. All Rights Reserved.
           </span>
         </div>
       </footer>
